@@ -1,0 +1,90 @@
+<div *ngIf="user == 'sales' || user =='customer'">
+    <div class="row">
+        <div class="col-md-5">
+            <h3>Ponuda</h3>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-1 header">
+            <button type="button" class="btn btn-light rounded-pill btn-sm" (click)="logout()">odjava</button>
+        </div>
+    </div>
+    <br />
+    <div *ngIf="user == 'sales'">
+        <button *ngIf="parts.length > 0" class="btn btn-secondary left" (click)="articleBtn()">Dodaj artikl</button>
+        <form *ngIf="articleAdd" [formGroup]="formCreateArticle">
+            <div class="row" style="margin-bottom: 5px;">
+                <div class="col-md-2 col-8 form-group">
+                    <label>Artikl:</label>
+                    <select class="form-select" formControlName="part">
+                        <option *ngFor="let part of parts" value="{{part.serialNumber}}">{{part.serialNumber}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-8 form-group">
+                    <label>Cijena:</label>
+                    <input type="number" class="form-control" formControlName="price" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btnCreate" (click)="createArticle()">Kreiraj novi</button>
+            <div *ngIf="!validatedArticle" class="text-danger validationFail">Unesite sva polja!</div>
+        </form>
+        <br />
+        <button *ngIf="articlesNoAction.length > 0" class="btn btn-secondary left" (click)="actionBtn()">Dodaj akciju</button>
+        <form *ngIf="actionAdd" [formGroup]="formCreateAction">
+            <div class="row" style="margin-bottom: 5px;">
+                <div class="col-md-3 col-8 form-group">
+                    <label>Početak akcije:</label>
+                    <input type="date" class="form-control" formControlName="startDate" />
+                </div>
+                <div class="col-md-3 col-8 form-group">
+                    <label>Kraj akcije:</label>
+                    <input type="date" class="form-control" formControlName="endDate" />
+                </div>
+                <div class="col-md-2 col-8 form-group">
+                    <label>Artikli:</label>
+                    <select class="form-select" formControlName="articles" multiple>
+                        <option *ngFor="let article of articlesNoAction" value="{{article.id}}">{{article.serialNumber}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-8 form-group">
+                    <label>Popust:</label>
+                    <input type="number" class="form-control" formControlName="discount" />
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btnCreate" (click)="createAction()">Kreiraj novu akciju</button>
+            <div *ngIf="!validatedAction" class="text-danger validationFail">Unesite sva polja ispravno!</div>
+        </form>
+    </div>
+    <div class="row">
+        <table class="table table-striped col-md-12">
+            <thead>
+                <tr>
+                    <th class="text-center">Artikl</th>
+                    <th class="text-center">Datum proizvodnje</th>
+                    <th class="text-center">Cijena</th>
+                    <th *ngIf="user == 'sales'"></th>
+                    <th *ngIf="user == 'sales'"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let article of articles; let i = index">
+                    <td class="text-center">{{article.serialNumber}}</td>
+                    <td class="text-center">{{article.dateManufactured}}</td>
+                    <td class="text-center">{{article.price}}</td>
+                    <td *ngIf="user == 'sales'">
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label>Nova bazna cijena:</label>
+                                <input type="number" [(ngModel)]="newPrice[i]" class="form-control"/>
+                                <button type="button" class="btn btn-success" style="margin-top: 6px;" (click)="changePrice(article.id, i)">Izmjeni cijenu</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td *ngIf="user == 'sales'"><button type="button" class="btn btn-danger" (click)="deleteArticle(article.id)">Briši</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="user == 'warehouse'">
+    <h3 class="text-danger">Nedozvoljen pristup</h3>
+</div>

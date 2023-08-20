@@ -1,0 +1,82 @@
+<div *ngIf="user === 'warehouse'">
+
+<div class="row justify-content-between">
+    <div class="col-md-5">
+        <h2>Dijelovi</h2>
+    </div>
+    <div class="col-md-1 header">
+        <button type="button" class="btn btn-light rounded-pill btn-sm" (click)="logout()">odjava</button>  
+    </div>
+</div>
+    
+<form [formGroup]="formCreate">
+    <div class="row" style="margin-bottom: 5px;">
+        <div class="col-md-2 col-8 form-group">
+            <label>Serijski broj:</label>
+            <input type="number" class="form-control" formControlName="serial" />
+        </div>
+        <div class="col-md-3 col-8 form-group">
+            <label>Datum proizvodnje:</label>
+            <input type="date" class="form-control" formControlName="date" />
+        </div>
+        <div class="col-md-2 col-8 form-group">
+            <label>Izaberite auto:</label>
+            <select class="form-select" formControlName="car">
+                <option *ngFor="let car of cars" value="{{car.carId}}">{{car.carName}}</option>
+            </select>
+        </div>
+    </div>
+    <button type="button" class="btn btn-success" (click)="createPart()">Kreiraj novi</button>
+    <div *ngIf="!validated" class="text-danger" id="validationFailed">Unesite sva polja!</div>
+</form>
+<br />
+
+<form [formGroup]="formSearch">
+    <div class="row">
+        <div class="col-md-2 col-8">
+            <input type="number" class="form-control" placeholder="Serijski broj" formControlName="serialS" />
+        </div>
+        <div class="col-md-1">
+            <span class="btn" (click)="searchSerial()">Pretraži</span>
+        </div>
+        <div class="col-md-2 col-8">
+            <input type="date" class="form-control" placeholder="Datum" formControlName="dateS" />
+        </div>
+        <div class="col-md-1">
+            <span class="btn" (click)="searchDate()">Pretraži</span>
+        </div>
+        <div class="col-md-2 col-8">
+            <input type="text" class="form-control" placeholder="Ime auta" formControlName="carS" />
+        </div>
+        <div class="col-md-1">
+            <span class="btn" (click)="searchCar()">Pretraži</span>
+        </div>
+        <div class="col-md-3">
+            <button type="reset" class="btn btn-outline-primary" (click)="resetSearch()">Očisti pretragu</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Serijski broj</th>
+            <th>Datum proizvodnje</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let part of parts">
+            <td>{{part.serialNumber}}</td>
+            <td>{{part.dateManufactured}}</td>
+            <td>
+                <button type="button" class="btn btn-danger" (click)="deletePart(part.id)">Briši</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+<div *ngIf="user != 'warehouse'">
+    <h3 class="text-danger">Nedozvoljen pristup</h3>
+</div>

@@ -1,0 +1,27 @@
+<div *ngIf="user === 'none'" style="margin: 7px 0 0 3px" class="container">
+    <form [formGroup]="loginForm">
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label>Korisničko ime:</label>
+                <input type="text" class="form-control" formControlName="username" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label>Lozinka:</label>
+                <input type="password" class="form-control" formControlName="password"/>
+            </div>
+        </div>
+        <br />
+        <span class="text-danger">{{error}}</span>
+        <div class="row">
+            <div class="col-md-3">
+                <button (click)="login()" class="btn btn-primary" style="margin-top: 15px;">Prijava</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="user === 'sales' || user === 'customer' || user === 'warehouse'" style="margin-top: 20px;">
+    <h3 class="text-danger">Već ste prijavljeni</h3>
+</div>

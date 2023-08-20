@@ -1,0 +1,35 @@
+.left {
+    margin-left: 4px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    margin-left: 4px;
+}
+
+.header {
+    margin-top: 5px;
+}
+
+form {
+    margin-left: 8px;
+}
+
+
+.btnCreate {
+    margin-top: 13px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+.validationFail {
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        margin-left: 10px;
+    }
+}
